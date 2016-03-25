@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+    <link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+</head>
+<body>
+<!--最外面的容器nav标签，并添加nav-bar样式类，表示这里面属于导航条 -->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <!--第二步：增加header-->
+        <div class="navbar-header">
+            <!--最左侧的，默认不可见 按钮标签里嵌套了三个span的icon。然后给与navbar-toggle样式类和属性collapse(收起)，点击的时候目标为data-target。当窗口缩小到一定程度，右侧的效果显现。-->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menus">
+                <span class="sr-only">201601blog</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Blog</a>
+        </div>
+        <!-- 放置其它的导航条 -->
+        <div class="collapse navbar-collapse" id="menus">
+            <ul class="nav navbar-nav">
+                <% if(user){ %>
+                <li><a href="/articles/add">Post</a></li>
+                <% }else{ %>
+                <li class="active"><a href="/users/reg">Register</a></li>
+                <li><a href="/users/login">Login</a></li>
+                <% } %>
+            </ul>
+            <form class="navbar-form navbar-left" role="search" method="get" action="/articles/list/1/2">
+                <div class="form-group">
+                    <input type="text" name="keyword" id="keyword" class="form-control" value="<%=keyword%>"/>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <% if(user){ %>
+                <li class="dropdown">
+                    <img src="<%=user.img%>" alt=""/>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="<%=user.img%>" alt=""/><%=user.username%> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/users/logout">Logout</a></li>
+                    </ul>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container reminder-info">
+    <% if (success) { %>
+    <p class="bg-success text-success"><%= success %> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+    <% } %>
+    <% if (error) { %>
+    <p class="bg-danger text-danger"><%= error %> <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+    <% } %>
+</div>
+<div class="container">
